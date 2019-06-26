@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const restify = require("restify");
-const environment_1 = require("../common/environment");
 const mongoose = require("mongoose");
+const environment_1 = require("../common/environment");
 const merge_patch_parser_1 = require("./merge-patch.parser");
 const error_handler_1 = require("./error.handler");
 class Server {
@@ -12,7 +12,7 @@ class Server {
             useMongoClient: true
         });
     }
-    initRoutes(routers = []) {
+    initRoutes(routers) {
         return new Promise((resolve, reject) => {
             try {
                 this.application = restify.createServer({
@@ -32,11 +32,11 @@ class Server {
                 this.application.on('restifyError', error_handler_1.handleError);
             }
             catch (error) {
-                console.log(error);
+                reject(error);
             }
         });
     }
-    boostrap(routers = []) {
+    bootstrap(routers = []) {
         return this.initializeDb().then(() => this.initRoutes(routers).then(() => this));
     }
 }

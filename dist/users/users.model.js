@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
 const validators_1 = require("../common/validators");
+const bcrypt = require("bcrypt");
 const environment_1 = require("../common/environment");
 const userSchema = new mongoose.Schema({
     name: {
@@ -14,8 +14,8 @@ const userSchema = new mongoose.Schema({
     email: {
         type: String,
         unique: true,
-        required: true,
-        match: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        match: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+        required: true
     },
     password: {
         type: String,
@@ -32,7 +32,7 @@ const userSchema = new mongoose.Schema({
         required: false,
         validate: {
             validator: validators_1.validateCPF,
-            message: 'Invalid CPF'
+            message: '{PATH}: Invalid CPF ({VALUE})'
         }
     }
 });
@@ -49,6 +49,7 @@ const saveMiddleware = function (next) {
         next();
     }
     else {
+        hashPassword(user, next);
     }
 };
 const updateMiddleware = function (next) {
