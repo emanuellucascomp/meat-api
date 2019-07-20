@@ -24,7 +24,10 @@ class UsersRouter extends ModelRouter<User> {
               return []
             }
           })
-          .then(this.renderAll(res, next))
+          .then(this.renderAll(res, next, {
+            pageSize: this.pageSize,
+            url: req.url
+          }))
           .catch(next)
     } else {
       next()
