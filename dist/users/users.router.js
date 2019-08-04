@@ -40,7 +40,7 @@ class UsersRouter extends model_router_1.ModelRouter {
         application.put(`${this.basePath}/:id`, [authz_handler_1.authorize('admin'), this.validateId, this.replace]);
         application.patch(`${this.basePath}/:id`, [authz_handler_1.authorize('admin'), this.validateId, this.update]);
         application.del(`${this.basePath}/:id`, [authz_handler_1.authorize('admin'), this.validateId, this.delete]);
-        application.post(`${this.basePath}/authenticate`, [authz_handler_1.authorize('admin'), auth_handler_1.authenticate]);
+        application.post(`${this.basePath}/authenticate`, [auth_handler_1.authenticate]);
     }
 }
 exports.usersRouter = new UsersRouter();
